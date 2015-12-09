@@ -61,7 +61,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BoardItem.cs" />
+    <Compile Include="Color.cs" />
     <Compile Include="ColorsProvider.cs" />
+    <Compile Include="FirstPlayer.cs" />
+    <Compile Include="IMessageBoxService.cs" />
+    <Compile Include="ListExtensions.cs" />
+    <Compile Include="MessageBoxService.cs" />
     <Compile Include="SchurSolverService.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

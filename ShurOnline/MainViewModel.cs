@@ -12,6 +12,13 @@ namespace ShurOnline
     [ImplementPropertyChanged]
     public class MainViewModel
     {
+        private readonly IMessageBoxService messageBoxService;
+        public MainViewModel()
+        {
+            ColorBoardItemDictionary = new Dictionary<int, List<BoardItem>>();
+            messageBoxService = new MessageBoxService();
+        }
+
         public int BoardSize { get; set; }
         public int ColorsCount { get; set; }
         public ObservableCollection<Color> Colors { get; set; }
@@ -19,6 +26,9 @@ namespace ShurOnline
         public Color SelectedColor { get; set; }
         public ObservableCollection<BoardItem> BoardItems { get; set; }
         public int RoundsCount { get; set; }
+        public int CurrentRound { get; set; }
+        public Dictionary<int, List<BoardItem>> ColorBoardItemDictionary { get; set; }
+        public FirstPlayer FirstPlayer { get; set; }
 
         public void OnSelectedBoardItemChanged()
         {
@@ -27,11 +37,22 @@ namespace ShurOnline
                 SelectedBoardItem.IsUsed = true;
                 if (SelectedColor != null)
                     SelectedBoardItem.Color = SelectedColor.Index;
+                if (ColorBoardItemDictionary.ContainsKey(SelectedBoardItem.Color))
+                    ColorBoardItemDictionary[SelectedBoardItem.Color].Add(SelectedBoardItem);
+                else
+                {
+                    var sameColorList = new List<BoardItem> {SelectedBoardItem};
+                    ColorBoardItemDictionary.Add(SelectedBoardItem.Color, sameColorList);
+                }
+                var isSchur = new SchurSolverService().CheckSchur(ColorBoardItemDictionary);
+                if (isSchur)
+                    messageBoxService.ShowMessage("Schur!", "");
             }
         }
 
         public void StartGame()
         {
+            FirstPlayer = new FirstPlayer();
             
         }
 
@@ -48,18 +69,5 @@ namespace ShurOnline
             var items = integerList.Select(i => new BoardItem { Value = i }).ToList();
             BoardItems = new ObservableCollection<BoardItem>(items);
         }
-    }
-    [ImplementPropertyChanged]
-    public class BoardItem
-    {
-        public int Value { get; set; }
-        public int Color { get; set; }
-        public bool IsUsed { get; set; }
-
-    }
-
-    public class Color
-    {
-        public int Index { get; set; }
     }
 }
