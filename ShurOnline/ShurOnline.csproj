@@ -64,6 +64,8 @@
     <Compile Include="BoardItem.cs" />
     <Compile Include="Color.cs" />
     <Compile Include="ColorsProvider.cs" />
+    <Compile Include="Converters\BoolToBorderColourConverter.cs" />
+    <Compile Include="Converters\CurrentTurnToTitleConverter.cs" />
     <Compile Include="FirstPlayer.cs" />
     <Compile Include="IMessageBoxService.cs" />
     <Compile Include="ListExtensions.cs" />
@@ -77,7 +79,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="BoolToColorConverter.cs" />
+    <Compile Include="Converters\BoolToColorConverter.cs" />
     <Compile Include="MainViewModel.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
