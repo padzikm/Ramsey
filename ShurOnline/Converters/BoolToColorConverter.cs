@@ -9,8 +9,10 @@ namespace ShurOnline.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var boolValue = (int) value;
-            var convertFromString = ColorConverter.ConvertFromString(ColorsProvider.Colors[boolValue]);
+            var boolValue = (int?) value;
+            if (boolValue == null)
+                return new SolidColorBrush(Colors.White);
+            var convertFromString = ColorConverter.ConvertFromString(ColorsProvider.Colors[(int)boolValue]);
             if (convertFromString != null)
                 return new SolidColorBrush((System.Windows.Media.Color)convertFromString);
             return new SolidColorBrush(Colors.White);
