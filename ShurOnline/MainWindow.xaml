@@ -11,11 +11,11 @@
                 <Label>Rozmiar planszy</Label>
                 <TextBox Width="25" Text="{Binding BoardSize}"/>
                 <Label>Liczba rund</Label>
-                <TextBox Width="25"/>
+                <TextBox Width="25" Text="{Binding RoundsCount}"/>
                 <Label Content="Gracz"/>
                 <ComboBox>
                     <ComboBoxItem>Gracz 1</ComboBoxItem>
-                    <ComboBoxItem>Gracz 2</ComboBoxItem>
+                    <!--<ComboBoxItem>Gracz 2</ComboBoxItem>-->
                 </ComboBox>
                 <Label Content="Liczba kolorów"/>
                 <TextBox Width="25" Text="{Binding ColorsCount}"/>

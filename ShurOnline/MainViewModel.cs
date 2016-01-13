@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
 using PropertyChanged;
 
 namespace ShurOnline
@@ -42,6 +38,12 @@ namespace ShurOnline
         {
             if (SelectedBoardItem != null)
             {
+                if (CurrentRound >= RoundsCount)
+                {
+                    messageBoxService.ShowMessage("Brak Shura!", "");
+                    return;
+                }
+
                 if (CurrentTurn == Turn.First)
                 {
                     SelectedBoardItem.IsSelected = true;
@@ -50,29 +52,34 @@ namespace ShurOnline
                 }
                 else
                 {
-                    SelectedBoardItem.IsUsed = true;
-                    if (SelectedColor != null)
-                        SelectedBoardItem.Color = SelectedColor.Index;
-                    if (ColorBoardItemDictionary.ContainsKey(SelectedBoardItem.Color))
-                        ColorBoardItemDictionary[SelectedBoardItem.Color].Add(SelectedBoardItem);
-                    else
-                    {
-                        var sameColorList = new List<BoardItem> { SelectedBoardItem };
-                        ColorBoardItemDictionary.Add(SelectedBoardItem.Color, sameColorList);
-                    }
-                    var isSchur = new SchurSolverService().CheckSchur(ColorBoardItemDictionary);
-                    if (isSchur)
-                        messageBoxService.ShowMessage("Schur!", "");
-                    CurrentTurn = Turn.First;
-                }
+                    ++CurrentRound;
 
+                    if (!ColorBoardItemDictionary.Any())
+                        for (var i = 0; i < ColorsCount; ++i)
+                            ColorBoardItemDictionary[i] = new List<BoardItem>();
+
+                    SelectedBoardItem.IsUsed = true;
+
+                    var isSchur = new SchurSolverService().CheckSchur(ColorBoardItemDictionary, SelectedBoardItem);
+                    if (isSchur)
+                        messageBoxService.ShowMessage("Shur!", "");
+                    else
+                        CurrentTurn = Turn.First;
+                }
             }
         }
 
         public void StartGame()
         {
             FirstPlayer = new FirstPlayer();
-            
+            if(ColorsCount == 1 && BoardSize >= 2)
+                messageBoxService.ShowMessage("Shur na horyzoncie!", "");
+            else if (ColorsCount == 2 && BoardSize >= 5)
+                messageBoxService.ShowMessage("Shur na horyzoncie!", "");
+            else if (ColorsCount == 3 && BoardSize >= 14)
+                messageBoxService.ShowMessage("Shur na horyzoncie!", "");
+            else if (ColorsCount == 4 && BoardSize >= 45)
+                messageBoxService.ShowMessage("Shur na horyzoncie!", "");
         }
 
         public void OnColorsCountChanged()
@@ -84,7 +91,7 @@ namespace ShurOnline
 
         public void OnBoardSizeChanged()
         {
-            var integerList = Enumerable.Range(0, BoardSize);
+            var integerList = Enumerable.Range(1, BoardSize);
             var items = integerList.Select(i => new BoardItem { Value = i }).ToList();
             BoardItems = new ObservableCollection<BoardItem>(items);
         }
