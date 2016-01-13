@@ -31,6 +31,8 @@
                             <StackPanel>
                                 <Ellipse Width="30"
                                          Height="30"
+                                         Stroke="Black"
+                                         StrokeThickness="1"
                                          Fill="{Binding Color, Converter={StaticResource BoolToColorConverter}}">
                                 </Ellipse>
                                 <Label Content="{Binding Value}"
