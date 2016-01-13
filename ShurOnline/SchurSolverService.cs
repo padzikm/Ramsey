@@ -19,7 +19,7 @@ namespace ShurOnline
 
             foreach (var position in colorBoardItemDictionary)
             {
-                selectedItem.Color = -1;
+                var found = true;
                 position.Value.Add(selectedItem);
                 var combinations = position.Value.Combinations(3);
 
@@ -28,11 +28,11 @@ namespace ShurOnline
                     var combinationList = combination.OrderBy(b => b.Value).ToList();
                     if (combinationList[0].Value + combinationList[1].Value == combinationList[2].Value)
                     {
-                        selectedItem.Color = -2;
+                        found = false;
                         break;
                     }
                 }
-                if (selectedItem.Color == -2)
+                if (!found)
                     position.Value.Remove(selectedItem);
                 else
                 {
