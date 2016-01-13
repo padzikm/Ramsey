@@ -12,13 +12,11 @@
                 <TextBox Width="25" Text="{Binding BoardSize}"/>
                 <Label>Liczba rund</Label>
                 <TextBox Width="25" Text="{Binding RoundsCount}"/>
-                <Label Content="Gracz"/>
-                <ComboBox>
-                    <ComboBoxItem>Gracz 1</ComboBoxItem>
-                    <!--<ComboBoxItem>Gracz 2</ComboBoxItem>-->
-                </ComboBox>
+                <Label Content="Gracz 1"/>
                 <Label Content="Liczba kolorów"/>
                 <TextBox Width="25" Text="{Binding ColorsCount}"/>
+                <Label Content="Runda"/>
+                <Label Content="{Binding CurrentRound}"/>
                 <Button Content="Start" Click="ButtonBase_OnClick"></Button>
             </StackPanel>
             <ListView ItemsSource="{Binding BoardItems}" Height="200" SelectedItem="{Binding SelectedBoardItem}" >
