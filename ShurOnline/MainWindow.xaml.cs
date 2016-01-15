@@ -32,5 +32,11 @@ namespace ShurOnline
         {
             MainViewModel.StartGame();
         }
+
+        private void Reset_OnClick(object sender, RoutedEventArgs e)
+        {
+            MainViewModel = new MainViewModel();
+            DataContext = MainViewModel;
+        }
     }
 }
